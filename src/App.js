@@ -1,77 +1,76 @@
 import React, { Component } from "react";
-import "./App.css";
-import cardInfo from "./cardInfo.json";
-import Card from "./components/Card/Card.js";
+import Card from "./components/Card/Card";
 import Section from "./components/Section";
 import Navbar from "./components/Navbar";
+import cardInfo from "./cardInfo.json";
+import "./App.css";
+
 
 class App extends Component {
+  // Setting this.state.cardInfo to json file
   state = {
-    cardInfo,
-    score: 0,
-    topScore: 0
+    curScore: 0,
+    topScore: 0,
+    cardInfo
   };
 
-  handleCorrectGuess = newData => {
-    const { topScore, score } = this.state;
-    const newScore = score + 1;
-    const newTopScore = newScore > topScore ? newScore : topScore;
-    this.setState({
-      cardInfo: this.shuffleData(newData),
-      score: newScore,
-      topScore: newTopScore
+  gameEnds = () => {
+    //Current Score is greater than Top Score
+    if(this.state.curScore > this.state.topScore) {
+
+      //At this state, the Top Score will be score
+      this.setState({topScore: this.state.curScore}, function(){
+        console.log(this.state.topScore);
+      });
+    }
+
+    //Loop through each Card at the current state
+    this.state.cardInfo.forEach(card => {
+      card.count = 0;
     });
-  };
 
-  handleIncorrectGuess = data => {
-    this.setState({
-      cardInfo: this.resetData(cardInfo),
-      score: 0
-    });
-  };
+    // Alert Game Over with the Score
+    alert(`Game Over!: \n You Scored: ${this.state.curScore}`);
+      this.setState({curScore:0});
+      return true;
+  }
 
-  resetData = data => {
-    const resetData = data.map(item => ({ ...item, clicked: false }));
-    return this.shuffleData(resetData);
-  };
+  // Scoring passed an id 
+  scoringMeter = id => {
 
-  randomImages = () => {
-    const cardInfo = this.state.cardInfo.sort(image => {
-      return 0.5 - Math.random();
-    });
-    this.setState({ cardInfo });
-  };
-
-  handleItemClick = id => {
-    let guessedCorrectly = false;
-    // double check this
-    const newData = this.state.data.map(item => {
-      const newItem = { ...item };
-      if ((newItem.id = id)) {
-        if (!newItem.clicked) {
-          newItem.clicked = true;
-          guessedCorrectly = true;
+    // Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
+    this.state.cardInfo.find((obj, inj) => {
+      if(obj.id === id) {
+        if(cardInfo[inj].count === 0) {
+          cardInfo[inj].count = cardInfo[inj].count + 1;
+          
+          this.setState({curScore: this.state.curScore + 1}, function(){
+            console.log(this.state.curScore);
+          });
+          this.state.cardInfo.sort(() => Math.random() - 0.5)
+          return true;
+        } else {
+          this.gameEnds();
         }
       }
-      return newItem;
     });
-    guessedCorrectly
-      ? this.handleCorrectGuess(newData)
-      : this.handleIncorrectGuess(newData);
-  };
+  }
 
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar
+          curScore={this.state.curScore}
+          topScore={this.state.topScore}
+        />
         <Section>
           {this.state.cardInfo.map(card => (
             <Card
-              randomImages={this.randomImages}
+              // randomImages={this.randomImages}
               id={card.id}
               key={card.id}
               image={card.image}
-              handleItemClick={this.handleIteClickx}
+              scoringMeter={this.scoringMeter}
             />
           ))}
         </Section>
@@ -79,5 +78,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;

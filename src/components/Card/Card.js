@@ -3,12 +3,12 @@ import "./Card.css";
 
 const Card = props => {
   return (
-    <div>
+    <div className="card">
       <img
         className="images"
         alt={props.name}
         src={props.image}
-        onClick={() => props.randomImages()}
+        onClick={() => props.scoringMeter(props.id)}
       />
     </div>
   );
