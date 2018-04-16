@@ -1,22 +1,23 @@
 import React from "react";
-import "./Navbar.css";
+import "./Title.css";
 
 const that = {
   primary: {
-    color: "#2c323c",
+    color: "rgb(255, 243, 24)",
     textShadow: "1px 1px 4px white",
     fontSize: "9.0rem",
     fontWeight: "bold",
 
   }
 };
-const Navbar = props => (
+const Title = props => (
   <div>
     <div className="jumbotron jumbotron-fluid">
       <div className="title">
-        <h1 style={that.primary}>Memory Game!{props.children}</h1>
+        <h1 style={that.primary}>Clicky Game!{props.children}</h1>
         <h2>
           Score: {props.curScore}
+          <tr/>
           Highscore: {props.topScore}
         </h2>
       </div>
@@ -24,6 +25,6 @@ const Navbar = props => (
   </div>
 );
 
-export default Navbar;
+export default Title;
 
 

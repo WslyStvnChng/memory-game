@@ -11,9 +11,9 @@
     -webkit-transition-delay: .1s;
     transition: box-shadow .2s;
     transition-delay: .1s;
-    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 9px 10px 0 rgba(246, 0, 0, 0.2);
 }
 
 .images:hover {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 10px 30px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 10px 30px 0 rgba(230, 246, 5, 0.5);
 }
